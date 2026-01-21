@@ -5,11 +5,13 @@ import {
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
+  Unique,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { MessageStatus } from './message-status.enum';
 
 @Entity('birthday_message_history')
+@Unique(['userId', 'birthdayDate'])
 export class BirthdayMessageHistory {
   @PrimaryGeneratedColumn()
   id: number;
