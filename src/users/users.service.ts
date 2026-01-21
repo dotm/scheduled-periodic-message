@@ -34,7 +34,7 @@ export class UsersService {
       firstName: createUserDto.firstName,
       lastName: createUserDto.lastName,
       email: createUserDto.email,
-      birthdayDate: new Date(createUserDto.birthdayDate),
+      birthDate: new Date(createUserDto.birthDate),
       tzOffset,
     });
 

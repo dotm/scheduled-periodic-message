@@ -20,8 +20,8 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column({ name: 'birthday_date', type: 'date' })
-  birthdayDate: Date;
+  @Column({ name: 'birth_date', type: 'date' })
+  birthDate: Date;
 
   @Column({ name: 'tz_offset', type: 'float' })
   tzOffset: number;
