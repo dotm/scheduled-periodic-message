@@ -21,9 +21,7 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const tzOffset = convertTzIdentifierToTzOffset(
-      createUserDto.timeZoneIdentifier,
-    );
+    const tzOffset = convertTzIdentifierToTzOffset(createUserDto.location);
 
     if (tzOffset === undefined) {
       throw new BadRequestException('Invalid time zone identifier');
