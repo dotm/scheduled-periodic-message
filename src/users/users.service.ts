@@ -30,6 +30,7 @@ export class UsersService {
     const newUser = this.usersRepository.create({
       firstName: createUserDto.firstName,
       lastName: createUserDto.lastName,
+      email: createUserDto.email,
       birthdayDate: new Date(createUserDto.birthdayDate),
       tzOffset,
     });
