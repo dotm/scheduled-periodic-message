@@ -6,9 +6,12 @@ import {
   Delete,
   Body,
   Param,
+  UsePipes,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
+import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
+import { createUserSchema, type CreateUserDto } from './dto/create-user.dto';
 
 @Controller('user')
 export class UsersController {
@@ -25,8 +28,9 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() user: Partial<User>): Promise<User> {
-    return this.usersService.create(user);
+  @UsePipes(new ZodValidationPipe(createUserSchema))
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto);
   }
 
   @Put(':id')

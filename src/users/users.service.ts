@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { convertTzIdentifierToTzOffset } from '../helpers/timezone-helpers';
 
 @Injectable()
 export class UsersService {
@@ -18,8 +20,22 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
-  async create(user: Partial<User>): Promise<User> {
-    const newUser = this.usersRepository.create(user);
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const tzOffset = convertTzIdentifierToTzOffset(
+      createUserDto.timeZoneIdentifier,
+    );
+
+    if (tzOffset === undefined) {
+      throw new BadRequestException('Invalid time zone identifier');
+    }
+
+    const newUser = this.usersRepository.create({
+      firstName: createUserDto.firstName,
+      lastName: createUserDto.lastName,
+      birthdayDate: new Date(createUserDto.birthdayDate),
+      tzOffset,
+    });
+
     return this.usersRepository.save(newUser);
   }
 
