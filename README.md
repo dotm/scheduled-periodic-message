@@ -2,6 +2,7 @@
 
 - npm install --save @nestjs/typeorm typeorm pg
 - npm install --save @nestjs/swagger swagger-ui-express
+- npm install --save @nestjs/schedule
 - create database scheduled_periodic_message in PostgreSQL
 - npm run start
 
