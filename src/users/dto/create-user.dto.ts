@@ -1,4 +1,19 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { z } from 'zod';
+
+export class CreateUserRequestDto {
+  @ApiProperty({ example: 'John', minLength: 1 })
+  firstName: string;
+
+  @ApiProperty({ example: 'Doe', minLength: 1 })
+  lastName: string;
+
+  @ApiProperty({ example: '1990-05-15', description: 'ISO date string' })
+  birthdayDate: string;
+
+  @ApiProperty({ example: 'America/New_York', description: 'IANA time zone' })
+  timeZoneIdentifier: string;
+}
 
 export const createUserSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),

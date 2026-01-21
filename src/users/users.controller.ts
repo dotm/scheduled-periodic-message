@@ -8,12 +8,18 @@ import {
   Param,
   UsePipes,
 } from '@nestjs/common';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe';
-import { createUserSchema, type CreateUserDto } from './dto/create-user.dto';
+import {
+  CreateUserRequestDto,
+  createUserSchema,
+  type CreateUserDto,
+} from './dto/create-user.dto';
 
 @Controller('user')
+@ApiTags('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -28,6 +34,7 @@ export class UsersController {
   }
 
   @Post()
+  @ApiBody({ type: CreateUserRequestDto })
   @UsePipes(new ZodValidationPipe(createUserSchema))
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
