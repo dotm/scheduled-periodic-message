@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { convertTzIdentifierToTzOffset } from '../helpers/timezone-helpers';
+import { BirthdayMessagesService } from '../birthday-messages/birthday-messages.service';
+import { MessageStatus } from '../birthday-messages/message-status.enum';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private birthdayMessagesService: BirthdayMessagesService,
   ) {}
 
   findAll(): Promise<User[]> {
@@ -44,6 +47,10 @@ export class UsersService {
   }
 
   async remove(id: number): Promise<void> {
+    await this.birthdayMessagesService.deleteByUserIdAndStatus(id, [
+      MessageStatus.QUEUED,
+      MessageStatus.FAILED,
+    ]);
     await this.usersRepository.delete(id);
   }
 }

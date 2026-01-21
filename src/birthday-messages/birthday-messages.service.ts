@@ -46,4 +46,16 @@ export class BirthdayMessagesService {
         messageSentAt && { messageSentAt }),
     });
   }
+
+  async deleteByUserIdAndStatus(
+    userId: number,
+    statuses: MessageStatus[],
+  ): Promise<void> {
+    await this.birthdayMessageRepository
+      .createQueryBuilder()
+      .delete()
+      .where('user_id = :userId', { userId })
+      .andWhere('status IN (:...statuses)', { statuses })
+      .execute();
+  }
 }
