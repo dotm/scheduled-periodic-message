@@ -1,3 +1,12 @@
+## Run Tests
+
+Unit test: npm test
+
+E2E test:
+- docker pull postgres:16-alpine
+- always run Docker Desktop before E2E test
+- npm run test:e2e
+
 ## Setup
 
 - npm install

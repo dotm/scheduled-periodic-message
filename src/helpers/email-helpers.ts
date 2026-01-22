@@ -7,6 +7,7 @@ interface EmailSenderResponse {
   sentTime: string;
 }
 export async function sendEmail(email: string, message: string): Promise<void> {
+  //TODO: mock this if not in production
   try {
     const response = await fetch(emailSenderURL, {
       method: 'POST',

@@ -14,7 +14,7 @@ import { BirthdayMessagesModule } from './birthday-messages/birthday-messages.mo
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'postgres',
+      password: 'postgres', //TODO: Use environment variables or a secure vault in production
       database: 'scheduled_periodic_message',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // Set to false in production
